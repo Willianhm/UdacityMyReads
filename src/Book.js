@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 const propTypes = {
@@ -8,7 +8,7 @@ const propTypes = {
 
 const getAuthours = (authors) => { return authors ? authors.join(' , ') : ''; };
 
-class Book extends Component {
+class Book extends PureComponent {
     onChangeShelf = (evt) => {
         const { book, onChangeShelf } = this.props;
         onChangeShelf(book, evt.target.value);
@@ -23,7 +23,7 @@ class Book extends Component {
                         width: 128, 
                         height: 193, 
                         backgroundImage: `url(${book.imageLinks ? book.imageLinks.smallThumbnail: ''})`
-                    }}></div>
+                    }}/>
                     <div className="book-shelf-changer">
                         <select onChange={this.onChangeShelf} value={book.shelf}>
                             <option value="move" disabled>Move to...</option>

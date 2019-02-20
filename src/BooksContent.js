@@ -16,19 +16,24 @@ class BooksContent extends Component {
         loading: true
     }
 
-    componentDidMount() {
-        this.getBoooks();
+    async componentDidMount() {
+        // this.getBoooks();
+        const books = await BooksAPI.getAll();
+        this.setState({ books, loading: false });
     }
 
-    getBoooks = () => {
+     getBoooks = () => {
         this.showLoading();
-        BooksAPI.getAll().then(books => {
-            this.setState((currState) => ({
-                ...currState,
-                books,
-                loading: false
-            }));
-        });
+        // const books = await BooksAPI.getAll();
+        // this.setState({ books, loading: false });
+
+        // BooksAPI.getAll().then(books => {
+        //     this.setState((currState) => ({
+        //         ...currState,
+        //         books,
+        //         loading: false
+        //     }));
+        // });
     }
 
     showLoading(){
@@ -38,7 +43,13 @@ class BooksContent extends Component {
     onChangeShelf = (book, newShelf) => {
         this.showLoading();
         this.props.onChangeShelf(book, newShelf).then(() => {
-            this.getBoooks();
+            const books = this.state.books.map(b => {
+                if(b.id === book.id){
+                    b.shelf = newShelf;
+                }
+                return b;
+            });
+            this.setState({ books, loading: false });
         });
     }
 

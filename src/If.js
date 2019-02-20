@@ -4,12 +4,7 @@ const propTypes = {
     test: PropTypes.any.isRequired
 };
 
-const If = (props) => {
-    if(props.test){
-        return (props.children);
-    }
-    return null;
-}
+const If = ({ test, children }) => test ? children : null;
 
 If.propTypes = propTypes;
 
